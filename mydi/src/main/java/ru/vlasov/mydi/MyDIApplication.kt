@@ -1,5 +1,6 @@
 package ru.vlasov.mydi
 
+import android.app.Application
 import ru.vlasov.mydi.qualifier.Qualifier
 
 object MyDIApplication {
@@ -12,6 +13,13 @@ object MyDIApplication {
 
     fun modules(vararg modules: Module): MyDIApplication {
         return modules(modules.toList())
+    }
+
+    fun androidContext(app: Application): MyDIApplication {
+        return modules(module {
+            single { app }
+            single { app.applicationContext }
+        })
     }
 
     private fun modules(modules: List<Module>): MyDIApplication {
